@@ -14,6 +14,16 @@
   gap: var(--space-4);
   overflow-y: auto;
   z-index: 40;
+  animation: task-editor-slide-in 200ms ease-out;
+}
+
+@keyframes task-editor-slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 .task-editor-close {

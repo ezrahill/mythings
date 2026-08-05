@@ -12,7 +12,9 @@ export function TodayView() {
   const today = todayISO()
 
   const active = tasks.filter((task) => !task.completed)
-  const overdue = active.filter((task) => isOverdue(task.when, today))
+  const overdue = active.filter(
+    (task) => isOverdue(task.when, today) && !task.thisEvening,
+  )
   const dueToday = active.filter(
     (task) => isToday(task.when, today) && !task.thisEvening,
   )

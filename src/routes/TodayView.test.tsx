@@ -73,4 +73,23 @@ describe('TodayView', () => {
     expect(screen.queryByText('Future task')).not.toBeInTheDocument()
     expect(screen.queryByText('Done task')).not.toBeInTheDocument()
   })
+
+  it('renders an overdue This Evening task only in the This Evening section', () => {
+    useTaskStore.setState({
+      tasks: [
+        taskFixture({
+          id: 't1',
+          title: 'Overdue evening task',
+          when: '2026-08-01',
+          thisEvening: true,
+        }),
+      ],
+      loaded: true,
+    })
+    renderTodayView()
+
+    expect(screen.queryByText('Overdue')).not.toBeInTheDocument()
+    expect(screen.getByText('This Evening')).toBeInTheDocument()
+    expect(screen.getAllByText('Overdue evening task')).toHaveLength(1)
+  })
 })

@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../db/db'
+import { addDays, todayISO } from '../lib/dates'
 import { useTaskStore } from './useTaskStore'
 
 const baseTask = {
@@ -70,5 +71,24 @@ describe('useTaskStore', () => {
     expect(task.when).toBe('2026-08-06')
     const stored = await db.tasks.get('t1')
     expect(stored?.when).toBe('2026-08-06')
+  })
+
+  it('advances an overdue recurring task to today, not one interval past its old date', async () => {
+    const today = todayISO()
+    const tenDaysAgo = addDays(today, -10)
+    await useTaskStore.getState().addTask({
+      ...baseTask,
+      id: 't1',
+      title: 'Water plants',
+      when: tenDaysAgo,
+      recurrence: { freq: 'daily', interval: 1, anchor: tenDaysAgo },
+    })
+    await useTaskStore.getState().completeTask('t1')
+
+    const task = useTaskStore.getState().tasks[0]
+    expect(task.completed).toBe(false)
+    expect(task.when).toBe(today)
+    const stored = await db.tasks.get('t1')
+    expect(stored?.when).toBe(today)
   })
 })

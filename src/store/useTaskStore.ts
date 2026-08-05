@@ -43,8 +43,11 @@ export const useTaskStore = create<TaskState>((set, get) => ({
     if (!task) return
 
     if (task.recurrence) {
-      const from = task.when ?? todayISO()
-      const when = nextOccurrence(task.recurrence, from)
+      const today = todayISO()
+      let when = nextOccurrence(task.recurrence, task.when ?? today)
+      while (when < today) {
+        when = nextOccurrence(task.recurrence, when)
+      }
       await get().updateTask(id, { when })
       return
     }

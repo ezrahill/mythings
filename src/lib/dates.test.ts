@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { addDays, isOverdue, isToday, nextWeekend, todayISO } from './dates'
+import {
+  addDays,
+  formatLongDate,
+  groupByDate,
+  isOverdue,
+  isToday,
+  nextWeekend,
+  todayISO,
+} from './dates'
 
 describe('todayISO', () => {
   it('returns an ISO date string (YYYY-MM-DD)', () => {
@@ -57,5 +65,31 @@ describe('nextWeekend', () => {
 
   it('returns the same day when it is already Saturday', () => {
     expect(nextWeekend('2026-08-08')).toBe('2026-08-08')
+  })
+})
+
+describe('formatLongDate', () => {
+  it('formats a date as weekday, day month', () => {
+    // 2026-08-05 is a Wednesday
+    expect(formatLongDate('2026-08-05')).toBe('Wednesday, 5 August')
+  })
+})
+
+describe('groupByDate', () => {
+  it('groups items by their when date, ascending', () => {
+    const items = [
+      { id: 'c', when: '2026-08-10' },
+      { id: 'a', when: '2026-08-06' },
+      { id: 'b', when: '2026-08-06' },
+    ]
+    expect(groupByDate(items)).toEqual([
+      ['2026-08-06', [items[1], items[2]]],
+      ['2026-08-10', [items[0]]],
+    ])
+  })
+
+  it('drops items with no when date', () => {
+    const items = [{ id: 'a', when: undefined }, { id: 'b', when: '2026-08-06' }]
+    expect(groupByDate(items)).toEqual([['2026-08-06', [items[1]]]])
   })
 })

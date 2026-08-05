@@ -1,0 +1,54 @@
+.view h1 {
+  font-size: var(--font-title-size);
+  line-height: var(--font-title-line);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.view-subtitle {
+  font-size: var(--font-body-secondary-size);
+  color: var(--color-text-secondary);
+  margin: var(--space-1) 0 var(--space-6);
+}
+
+.group-header {
+  font-size: var(--font-label-section-size);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin: var(--space-6) 0 var(--space-2);
+}
+
+.group-header-overdue {
+  color: var(--color-upcoming);
+}
+
+.group-header-evening {
+  color: var(--color-evening);
+}
+
+.card-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.card-fraction {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-chip-size);
+}

@@ -4,3 +4,4 @@
 - 20:55 architect: plan ready (9 steps, ~20 files)
 - 21:14 designer: design ready (off-white/accent-blue palette, Inter/SF Pro type stack, 7 sections)
 - 21:10 coder: step 1 done. Scaffolded Vite + React + TypeScript project (React Router, Zustand, Dexie installed); build verified.
+- 21:14 coder: step 2 done. Added src/types/*.ts and Dexie schema/instance (src/db/schema.ts, db.ts) per the plan's data model; vitest + fake-indexeddb set up, 3 tests passing.

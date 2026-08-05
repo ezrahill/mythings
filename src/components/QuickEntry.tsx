@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { todayISO } from '../lib/dates'
 import { useTaskStore } from '../store/useTaskStore'
 import './QuickEntry.css'
 
@@ -32,6 +33,7 @@ export function QuickEntry({
       id: crypto.randomUUID(),
       title: trimmed,
       tagIds: [],
+      when: todayISO(),
       thisEvening: false,
       completed: false,
       order: taskCount,

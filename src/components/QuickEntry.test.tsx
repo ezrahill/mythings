@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../db/db'
+import { todayISO } from '../lib/dates'
 import { useTaskStore } from '../store/useTaskStore'
 import { QuickEntry } from './QuickEntry'
 
@@ -30,6 +31,15 @@ describe('QuickEntry', () => {
 
     expect(useTaskStore.getState().tasks.map((t) => t.title)).toEqual(['Buy milk'])
     expect(onClose).toHaveBeenCalledTimes(1)
+  })
+
+  it('schedules the new task for today, so it is visible in the Today view', async () => {
+    const user = userEvent.setup()
+    render(<QuickEntry open onClose={vi.fn()} />)
+
+    await user.type(screen.getByRole('textbox', { name: /title/i }), 'Buy milk{Enter}')
+
+    expect(useTaskStore.getState().tasks[0].when).toBe(todayISO())
   })
 
   it('does not create a task on Escape, just closes', async () => {

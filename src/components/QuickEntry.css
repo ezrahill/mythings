@@ -1,0 +1,33 @@
+.quick-entry-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 28, 30, 0.28);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 15vh;
+  z-index: 100;
+}
+
+.quick-entry {
+  width: 480px;
+  max-width: calc(100vw - var(--space-8));
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: var(--space-4);
+}
+
+.quick-entry input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font: inherit;
+  font-size: var(--font-heading-size);
+  color: var(--color-text);
+}
+
+.quick-entry input::placeholder {
+  color: var(--color-text-tertiary);
+}

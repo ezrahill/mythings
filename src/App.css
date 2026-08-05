@@ -1,0 +1,16 @@
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-content {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-8) var(--space-10);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.app-loading {
+  color: var(--color-text-tertiary);
+}

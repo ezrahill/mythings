@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { describeRecurrence } from '../lib/recurrence'
 import { useAreaStore } from '../store/useAreaStore'
 import { useProjectStore } from '../store/useProjectStore'
 import { useTagStore } from '../store/useTagStore'
 import { useTaskStore } from '../store/useTaskStore'
 import type { ID } from '../types/common'
 import { DatePicker } from './DatePicker'
+import { RecurrencePicker } from './RecurrencePicker'
 import { TagPicker } from './TagPicker'
 import './TaskEditor.css'
 
@@ -19,11 +21,13 @@ export function TaskEditor({
     state.tasks.find((t) => t.id === taskId),
   )
   const updateTask = useTaskStore((state) => state.updateTask)
+  const completeTask = useTaskStore((state) => state.completeTask)
   const projects = useProjectStore((state) => state.projects)
   const areas = useAreaStore((state) => state.areas)
   const tags = useTagStore((state) => state.tags)
   const [datePickerOpen, setDatePickerOpen] = useState(false)
   const [tagPickerOpen, setTagPickerOpen] = useState(false)
+  const [recurrencePickerOpen, setRecurrencePickerOpen] = useState(false)
 
   if (!foundTask) return null
   const task = foundTask
@@ -146,18 +150,26 @@ export function TaskEditor({
 
       <div className="task-editor-field">
         <span className="task-editor-label">Recurrence</span>
-        <span>None</span>
+        <button
+          type="button"
+          aria-label="Recurrence"
+          onClick={() => setRecurrencePickerOpen((open) => !open)}
+        >
+          {task.recurrence ? describeRecurrence(task.recurrence) : 'None'}
+        </button>
+        {recurrencePickerOpen && (
+          <RecurrencePicker
+            value={task.recurrence}
+            anchor={task.when ?? new Date().toISOString().slice(0, 10)}
+            onChange={(rule) => updateTask(task.id, { recurrence: rule })}
+          />
+        )}
       </div>
 
       <button
         type="button"
         className="task-editor-complete"
-        onClick={() =>
-          updateTask(task.id, {
-            completed: true,
-            completedAt: new Date().toISOString(),
-          })
-        }
+        onClick={() => completeTask(task.id)}
       >
         Mark Complete
       </button>

@@ -59,4 +59,42 @@ describe('TaskList', () => {
 
     expect(onSelect).toHaveBeenCalledWith('t1')
   })
+
+  it('advances a recurring task to its next occurrence rather than completing it', async () => {
+    const user = userEvent.setup()
+    const recurringTasks = [
+      {
+        id: 't3',
+        title: 'Water plants',
+        tagIds: [] as string[],
+        thisEvening: false,
+        completed: false,
+        order: 0,
+        createdAt: '',
+        when: '2026-08-05',
+        recurrence: { freq: 'daily' as const, interval: 1, anchor: '2026-08-05' },
+      },
+    ]
+    useTaskStore.setState({ tasks: recurringTasks, loaded: true })
+    render(<TaskList tasks={recurringTasks} onSelect={vi.fn()} />)
+
+    await user.click(screen.getByRole('checkbox'))
+
+    const task = useTaskStore.getState().tasks[0]
+    expect(task.completed).toBe(false)
+    expect(task.when).toBe('2026-08-06')
+  })
+
+  it('uncompletes a task by unchecking it', async () => {
+    const user = userEvent.setup()
+    const completedTasks = [
+      { id: 't4', title: 'Done thing', tagIds: [] as string[], thisEvening: false, completed: true, order: 0, createdAt: '' },
+    ]
+    useTaskStore.setState({ tasks: completedTasks, loaded: true })
+    render(<TaskList tasks={completedTasks} onSelect={vi.fn()} />)
+
+    await user.click(screen.getByRole('checkbox'))
+
+    expect(useTaskStore.getState().tasks[0].completed).toBe(false)
+  })
 })

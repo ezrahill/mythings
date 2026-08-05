@@ -20,6 +20,7 @@ export function TaskList({
   const projects = useProjectStore((state) => state.projects)
   const areas = useAreaStore((state) => state.areas)
   const updateTask = useTaskStore((state) => state.updateTask)
+  const completeTask = useTaskStore((state) => state.completeTask)
 
   function contextNameFor(task: Task): string | undefined {
     if (!showContext) return undefined
@@ -33,10 +34,11 @@ export function TaskList({
   }
 
   function handleToggleComplete(id: ID, completed: boolean) {
-    updateTask(id, {
-      completed,
-      completedAt: completed ? new Date().toISOString() : undefined,
-    })
+    if (completed) {
+      completeTask(id)
+    } else {
+      updateTask(id, { completed: false, completedAt: undefined })
+    }
   }
 
   return (

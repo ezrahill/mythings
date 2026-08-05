@@ -101,4 +101,57 @@ describe('TaskEditor', () => {
 
     expect(useTaskStore.getState().tasks[0].when).toBeDefined()
   })
+
+  it('shows None for recurrence by default and can set a rule via the picker', async () => {
+    const user = userEvent.setup()
+    render(<TaskEditor taskId="t1" onClose={vi.fn()} />)
+
+    expect(screen.getByRole('button', { name: /^recurrence/i })).toHaveTextContent('None')
+
+    await user.click(screen.getByRole('button', { name: /^recurrence/i }))
+    await user.selectOptions(screen.getByLabelText(/frequency/i), 'daily')
+
+    expect(useTaskStore.getState().tasks[0].recurrence).toMatchObject({
+      freq: 'daily',
+      interval: 1,
+    })
+  })
+
+  it('shows the plain-English recurrence summary once a rule is set', () => {
+    useTaskStore.setState({
+      tasks: [
+        {
+          ...task,
+          recurrence: { freq: 'weekly', interval: 2, byWeekday: [1], anchor: '2026-08-05' },
+        },
+      ],
+      loaded: true,
+    })
+    render(<TaskEditor taskId="t1" onClose={vi.fn()} />)
+
+    expect(screen.getByRole('button', { name: /^recurrence/i })).toHaveTextContent(
+      'Every 2 weeks on Mon',
+    )
+  })
+
+  it('advances a recurring task to its next occurrence when Mark Complete is clicked', async () => {
+    const user = userEvent.setup()
+    useTaskStore.setState({
+      tasks: [
+        {
+          ...task,
+          when: '2026-08-05',
+          recurrence: { freq: 'daily', interval: 1, anchor: '2026-08-05' },
+        },
+      ],
+      loaded: true,
+    })
+    render(<TaskEditor taskId="t1" onClose={vi.fn()} />)
+
+    await user.click(screen.getByRole('button', { name: /mark complete/i }))
+
+    const updated = useTaskStore.getState().tasks[0]
+    expect(updated.completed).toBe(false)
+    expect(updated.when).toBe('2026-08-06')
+  })
 })

@@ -45,4 +45,30 @@ describe('useTaskStore', () => {
     const stored = await db.tasks.get('t1')
     expect(stored).toBeUndefined()
   })
+
+  it('completes a non-recurring task outright', async () => {
+    await useTaskStore.getState().addTask({ ...baseTask, id: 't1', title: 'Buy milk' })
+    await useTaskStore.getState().completeTask('t1')
+
+    const task = useTaskStore.getState().tasks[0]
+    expect(task.completed).toBe(true)
+    expect(task.completedAt).toBeDefined()
+  })
+
+  it('advances a recurring task to its next occurrence instead of completing it', async () => {
+    await useTaskStore.getState().addTask({
+      ...baseTask,
+      id: 't1',
+      title: 'Water plants',
+      when: '2026-08-05',
+      recurrence: { freq: 'daily', interval: 1, anchor: '2026-08-05' },
+    })
+    await useTaskStore.getState().completeTask('t1')
+
+    const task = useTaskStore.getState().tasks[0]
+    expect(task.completed).toBe(false)
+    expect(task.when).toBe('2026-08-06')
+    const stored = await db.tasks.get('t1')
+    expect(stored?.when).toBe('2026-08-06')
+  })
 })

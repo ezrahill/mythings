@@ -6,3 +6,4 @@
 - 21:10 coder: step 1 done. Scaffolded Vite + React + TypeScript project (React Router, Zustand, Dexie installed); build verified.
 - 21:14 coder: step 2 done. Added src/types/*.ts and Dexie schema/instance (src/db/schema.ts, db.ts) per the plan's data model; vitest + fake-indexeddb set up, 3 tests passing.
 - 21:18 coder: step 3 done. Added src/db/repositories.ts (CRUD + byProject/byArea/byTag/byDateRange queries) for tasks, projects, areas, tags; 15 tests passing.
+- 21:20 coder: step 4 done. Added Zustand stores (useTaskStore, useProjectStore, useAreaStore, useTagStore) wired to the repository layer with hydrate/add/update/remove actions; 31 tests passing total.

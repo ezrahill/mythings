@@ -20,19 +20,19 @@ export const useProjectStore = create<ProjectState>((set, get) => ({
     set({ projects, loaded: true })
   },
   addProject: async (project) => {
-    await projectRepository.create(project)
     set({ projects: [...get().projects, project] })
+    await projectRepository.create(project)
   },
   updateProject: async (id, changes) => {
-    await projectRepository.update(id, changes)
     set({
       projects: get().projects.map((project) =>
         project.id === id ? { ...project, ...changes } : project,
       ),
     })
+    await projectRepository.update(id, changes)
   },
   removeProject: async (id) => {
-    await projectRepository.remove(id)
     set({ projects: get().projects.filter((project) => project.id !== id) })
+    await projectRepository.remove(id)
   },
 }))

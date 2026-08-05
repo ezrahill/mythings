@@ -20,19 +20,19 @@ export const useTaskStore = create<TaskState>((set, get) => ({
     set({ tasks, loaded: true })
   },
   addTask: async (task) => {
-    await taskRepository.create(task)
     set({ tasks: [...get().tasks, task] })
+    await taskRepository.create(task)
   },
   updateTask: async (id, changes) => {
-    await taskRepository.update(id, changes)
     set({
       tasks: get().tasks.map((task) =>
         task.id === id ? { ...task, ...changes } : task,
       ),
     })
+    await taskRepository.update(id, changes)
   },
   removeTask: async (id) => {
-    await taskRepository.remove(id)
     set({ tasks: get().tasks.filter((task) => task.id !== id) })
+    await taskRepository.remove(id)
   },
 }))

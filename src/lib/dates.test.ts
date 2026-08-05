@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { isOverdue, isToday, todayISO } from './dates'
+import { addDays, isOverdue, isToday, nextWeekend, todayISO } from './dates'
 
 describe('todayISO', () => {
   it('returns an ISO date string (YYYY-MM-DD)', () => {
@@ -36,5 +36,26 @@ describe('isOverdue', () => {
 
   it('is false when there is no date', () => {
     expect(isOverdue(undefined, '2026-08-05')).toBe(false)
+  })
+})
+
+describe('addDays', () => {
+  it('adds days within a month', () => {
+    expect(addDays('2026-08-05', 1)).toBe('2026-08-06')
+  })
+
+  it('rolls over into the next month', () => {
+    expect(addDays('2026-08-31', 1)).toBe('2026-09-01')
+  })
+})
+
+describe('nextWeekend', () => {
+  it('returns the upcoming Saturday from a midweek date', () => {
+    // 2026-08-05 is a Wednesday
+    expect(nextWeekend('2026-08-05')).toBe('2026-08-08')
+  })
+
+  it('returns the same day when it is already Saturday', () => {
+    expect(nextWeekend('2026-08-08')).toBe('2026-08-08')
   })
 })

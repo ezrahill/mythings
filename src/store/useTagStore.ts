@@ -20,19 +20,19 @@ export const useTagStore = create<TagState>((set, get) => ({
     set({ tags, loaded: true })
   },
   addTag: async (tag) => {
-    await tagRepository.create(tag)
     set({ tags: [...get().tags, tag] })
+    await tagRepository.create(tag)
   },
   updateTag: async (id, changes) => {
-    await tagRepository.update(id, changes)
     set({
       tags: get().tags.map((tag) =>
         tag.id === id ? { ...tag, ...changes } : tag,
       ),
     })
+    await tagRepository.update(id, changes)
   },
   removeTag: async (id) => {
-    await tagRepository.remove(id)
     set({ tags: get().tags.filter((tag) => tag.id !== id) })
+    await tagRepository.remove(id)
   },
 }))

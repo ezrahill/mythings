@@ -1,0 +1,8 @@
+.task-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-list .task-row:last-child {
+  border-bottom: none;
+}

@@ -20,19 +20,19 @@ export const useAreaStore = create<AreaState>((set, get) => ({
     set({ areas, loaded: true })
   },
   addArea: async (area) => {
-    await areaRepository.create(area)
     set({ areas: [...get().areas, area] })
+    await areaRepository.create(area)
   },
   updateArea: async (id, changes) => {
-    await areaRepository.update(id, changes)
     set({
       areas: get().areas.map((area) =>
         area.id === id ? { ...area, ...changes } : area,
       ),
     })
+    await areaRepository.update(id, changes)
   },
   removeArea: async (id) => {
-    await areaRepository.remove(id)
     set({ areas: get().areas.filter((area) => area.id !== id) })
+    await areaRepository.remove(id)
   },
 }))

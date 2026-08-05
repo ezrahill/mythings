@@ -1,25 +1,10 @@
 import { NavLink } from 'react-router-dom'
+import { swatchColor } from '../lib/colors'
 import { isOverdue, isToday, todayISO } from '../lib/dates'
 import { useAreaStore } from '../store/useAreaStore'
 import { useProjectStore } from '../store/useProjectStore'
 import { useTaskStore } from '../store/useTaskStore'
 import './Sidebar.css'
-
-// Round-robin colour set for areas/tags, per docs/design.md.
-const SWATCH_COLORS = [
-  '#2FB380',
-  '#AF52DE',
-  '#30B0C7',
-  '#E5484D',
-  '#F2A93B',
-  '#5E5CE6',
-  '#FF6B9D',
-  '#8E8E93',
-]
-
-function swatchColor(index: number) {
-  return SWATCH_COLORS[index % SWATCH_COLORS.length]
-}
 
 function navItemClass({ isActive }: { isActive: boolean }) {
   return `sidebar-nav-item${isActive ? ' active' : ''}`

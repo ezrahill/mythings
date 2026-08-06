@@ -1,0 +1,136 @@
+.sidebar {
+  width: var(--sidebar-width);
+  flex: 0 0 auto;
+  background: var(--color-sidebar-bg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  overflow-y: auto;
+}
+
+.sidebar-new-todo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: var(--font-label-nav-size);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.sidebar-new-todo kbd {
+  font-family: inherit;
+  font-size: var(--font-chip-size);
+  color: var(--color-text-tertiary);
+}
+
+.sidebar-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sidebar-nav-item,
+.sidebar-area,
+.sidebar-project {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 7px var(--space-2);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: var(--font-label-nav-size);
+}
+
+.sidebar-nav-item.active,
+.sidebar-area.active,
+.sidebar-project.active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.sidebar-nav-label {
+  flex: 1;
+}
+
+.sidebar-count {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-chip-size);
+}
+
+.sidebar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.sidebar-dot-today {
+  background: var(--color-today);
+}
+
+.sidebar-dot-upcoming {
+  background: var(--color-upcoming);
+}
+
+.sidebar-dot-projects {
+  background: var(--color-accent);
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  overflow-y: auto;
+}
+
+.sidebar-section-label {
+  font-size: var(--font-label-section-size);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  padding: 0 var(--space-2);
+}
+
+.sidebar-tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sidebar-swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.sidebar-tree-projects {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sidebar-bullet {
+  width: 4px;
+  height: 4px;
+  background: var(--color-text-tertiary);
+  flex: 0 0 auto;
+}

@@ -1,0 +1,84 @@
+.task-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 38px;
+  padding: 9px var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 100ms ease-out;
+}
+
+.task-row:hover {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.task-row-checkbox {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  border: 1.5px solid #c7c7cc;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background-color 150ms ease-out,
+    border-color 150ms ease-out;
+}
+
+.task-row-checkbox[aria-checked='true'] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.task-row-main {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.task-row-title {
+  font-size: var(--font-body-size);
+  color: var(--color-text);
+  transition: color 150ms ease-out;
+}
+
+.task-row-title-completed {
+  color: var(--color-text-tertiary);
+  text-decoration: line-through;
+}
+
+.task-row-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 0 0 auto;
+}
+
+.task-row-chip {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border-radius: 999px;
+  font-size: var(--font-chip-size);
+  padding: 2px var(--space-2);
+}
+
+.task-row-context {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-chip-size);
+}
+
+.task-row-date {
+  color: var(--color-text-tertiary);
+  font-size: var(--font-chip-size);
+}
+
+.task-row-date-overdue {
+  color: var(--color-upcoming);
+}

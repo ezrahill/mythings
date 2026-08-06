@@ -16,6 +16,12 @@
 
 - None beyond what `oxlint`/`tsc -b` already catch (both pass clean).
 
+## Follow-up commit — 07f46d0 (basename for subpath deploys)
+
+Added after the must-fixes above had already been re-verified: `BrowserRouter` now takes `basename={import.meta.env.BASE_URL}` in `src/main.tsx`, fixing a blank-screen bug when the static build is served under a subpath (e.g. `/proj-mythings/coder/`). Re-verified on `pr-1` @ `4af6f13`:
+- 137/137 tests still pass, build and lint clean — no regressions.
+- Confirmed the fix is scoped correctly: a default `vite build` (base `/`) is unaffected (`basename="/"` is a no-op), and `vite build --base=/proj-mythings/coder/` correctly emits subpath-prefixed asset URLs with the same string inlined into the bundle for the router's basename — checked both builds directly rather than trusting the description.
+
 ## Overall
 
-Solid implementation of the plan and design — data model, repository layer, and component structure all match `docs/plan.md` closely, and the design tokens/palette match `docs/design.md` exactly. Both must-fixes are now fixed and re-verified: 137 tests pass (up from 135), build and lint clean. Ready to merge.
+Solid implementation of the plan and design — data model, repository layer, and component structure all match `docs/plan.md` closely, and the design tokens/palette match `docs/design.md` exactly. Both must-fixes and the follow-up subpath-routing fix are verified: 137 tests pass, build and lint clean. Ready to merge.
